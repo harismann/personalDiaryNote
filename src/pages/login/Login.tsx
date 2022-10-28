@@ -12,7 +12,12 @@ import Swal from 'sweetalert2';
 
 let schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup
+    .string()
+    .min(8, 'password must be at least 8 character')
+    .max(20, 'maximum password lenght is 20 character')
+    .matches(/^[A-Za-z0-9_]+$/, 'password only containt alphanumeric')
+    .required('passwor must be filled'),
 });
 
 type FormValues = {
