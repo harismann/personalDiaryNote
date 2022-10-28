@@ -1,10 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import './rightbar.scss';
+import './ArchivePage';
 import { Link } from 'react-router-dom';
 import { Pagination, Stack } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/index';
-import { useEffect, useState } from 'react';
+import { CenterFocusStrong } from '@mui/icons-material';
 
 interface diaryList {
   id?: string;
@@ -79,9 +76,13 @@ const listDiary = [
 const Dlist: React.FC<{ items: diaryList }> = (props) => {
   const { title, content, created_at, id } = props.items;
   return (
-    <Link to={`/detailPage/${id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/editpage/${id}`} style={{ textDecoration: 'none' }}>
       <div className="user">
         <div className="userInfo">
+          {/* <img
+                src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""
+              /> */}
           <p>
             <span>{title}</span>
           </p>
@@ -92,37 +93,7 @@ const Dlist: React.FC<{ items: diaryList }> = (props) => {
   );
 };
 
-const RightBar = () => {
-  const [list, setList] = useState<Array<diaryList>>([]);
-  const [page, setPage] = useState(1);
-  const listDiaryNote = useSelector(
-    (state: RootState) => state.list.listArrFiltered
-  );
-  let pag = true;
-
-  if (listDiaryNote.length <= 5) {
-    pag = false;
-  }
-  const totalpage = () => Math.ceil(listDiaryNote.length / 5);
-
-  const handleChange = (page: number) => {
-    console.log('handle change', page);
-    setPage(page);
-  };
-
-  const paginate = (
-    array: Array<diaryList>,
-    page_size: number,
-    page_number: number
-  ) => {
-    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
-    return array.slice((page_number - 1) * page_size, page_number * page_size);
-  };
-  useEffect(() => {
-    // diaryList = listDiaryNote;
-    setList(paginate(listDiaryNote, 5, page));
-  }, [JSON.stringify(listDiaryNote), page]);
-
+const Archive = () => {
   return (
     <div className="rightBar">
       <div className="container">
@@ -130,32 +101,23 @@ const RightBar = () => {
           <h3>
             <span>Recent Diary Notes</span>
           </h3>
-          {list?.map((diary: diaryList) => (
+          {listDiary.map((diary: diaryList) => (
             <Dlist key={diary.id} items={diary} />
           ))}
-          {pag && (
-            <Stack
-              spacing={2}
-              sx={{
-                padding: 4,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Pagination
-                count={totalpage()}
-                variant="outlined"
-                shape="rounded"
-                onChange={(event: React.ChangeEvent<unknown>, page: number) => {
-                  handleChange(page);
-                }}
-              />
-            </Stack>
-          )}
+          <Stack
+            spacing={2}
+            sx={{
+              padding: 4,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Pagination count={10} variant="outlined" shape="rounded" />
+          </Stack>
         </div>
       </div>
     </div>
   );
 };
 
-export default RightBar;
+export default Archive;

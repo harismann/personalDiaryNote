@@ -1,5 +1,19 @@
 import axios from 'axios';
 
+axios.interceptors.request.use(function (config: any) {
+  // Do something before request is sent
+  const token = localStorage.getItem('userToken')
+  console.log(token, 'token from axios'); 
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token
+    }
+
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
 export default class Service {
   baseURL = 'https://private-anon-3d25aa8bf0-halfwineaid.apiary-mock.com/'
   async getAll(url: string, config = {}) {

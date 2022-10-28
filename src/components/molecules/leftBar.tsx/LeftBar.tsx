@@ -14,7 +14,7 @@ const LeftBar = () => {
               <span>Recents</span>
             </div>
           </Link>
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/archive" style={{ textDecoration: 'none' }}>
             <div className="user">
               <ArchiveIcon />
               <span>Archive</span>

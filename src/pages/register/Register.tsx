@@ -69,30 +69,20 @@ const Register = () => {
         <div className="right">
           <h1>Register</h1>
           <form>
-            <input
-              {...register('username')}
-              placeholder="UserName"
-              value="test"
-            />
+            <input {...register('username')} placeholder="UserName" />
             {errors?.username && <p>{errors.username.message}</p>}
-            <input
-              {...register('email')}
-              placeholder="Email"
-              value="test@gmail.com"
-            />
+            <input {...register('email')} placeholder="Email" />
             {errors?.email && <p>{errors.email.message}</p>}
             <input
               {...register('password')}
               placeholder="Password"
               type="password"
-              value="12345678"
             />
             {errors?.password && <p>{errors.password.message}</p>}
             <input
               {...register('confirmPassword')}
               placeholder="Confirm Password"
               type="password"
-              value="12345678"
             />
             {errors?.confirmPassword && <p>confirm password must match</p>}
             <button onClick={handleSubmit(onSubmit)}>Register</button>
